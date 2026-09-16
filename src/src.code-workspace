@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "src",
+			"path": "../../Desktop/Programming-Practice-Projects-main/courses/javascript/practice/dogfight/src"
+		},
+		{
+			"name": "lab-1",
+			"path": ".."
+		},
+		{
+			"name": "public",
+			"path": "../../Desktop/Programming-Practice-Projects-main/courses/javascript/practice/dogfight/public"
+		}
+	],
+	"settings": {}
+}
