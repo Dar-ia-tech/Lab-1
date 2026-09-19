@@ -1,7 +1,7 @@
 import './style.css'
 import { createLoop } from './loop.js'
 import { createInput } from './input.js'
-import { cloneShip, createShip, integrate } from './sim/ship.js'
+import { cloneDrone, createDrone, integrate } from './sim/drone.js'
 import { hideWrapForLerp, wrap } from './sim/arena.js'
 import { createCanvas } from './render/canvas.js'
 import {
@@ -9,32 +9,32 @@ import {
   drawBackground,
   drawGrid,
   drawHud,
-  drawShip,
+  drawDrone,
   drawStarfield,
-  interpolateShip,
+  interpolateDrone,
 } from './render/draw.js'
 
 const input = createInput(window)
-const ship = createShip()
-let previous = cloneShip(ship)
+const drone = createDrone()
+let previous = cloneDrone(drone)
 let stars = []
 
 const { ctx, size } = createCanvas(document.querySelector('#game'), {
   onResize({ w, h }) {
-    wrap(ship, w, h)
+    wrap(drone, w, h)
     stars = createStarfield(w, h)
   },
 })
 
-ship.x = size.w / 2
-ship.y = size.h / 2
-previous = cloneShip(ship)
+drone.x = size.w / 2
+drone.y = size.h / 2
+previous = cloneDrone(drone)
 
 function simulate(dt) {
-  previous = cloneShip(ship)
-  integrate(ship, input, dt)
-  wrap(ship, size.w, size.h)
-  hideWrapForLerp(previous, ship, size.w, size.h)
+  previous = cloneDrone(drone)
+  integrate(drone, input, dt)
+  wrap(drone, size.w, size.h)
+  hideWrapForLerp(previous, drone, size.w, size.h)
   input.consume()
 }
 
@@ -42,7 +42,7 @@ function render(alpha, stats) {
   drawBackground(ctx, size.w, size.h)
   drawGrid(ctx, size.w, size.h)
   drawStarfield(ctx, stars)
-  drawShip(ctx, interpolateShip(previous, ship, alpha))
+  drawDrone(ctx, interpolateDrone(previous, drone, alpha))
   drawHud(ctx, stats)
 }
 

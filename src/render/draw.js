@@ -14,7 +14,7 @@ export function lerpAngle(from, to, t) {
   return from + delta * t
 }
 
-export function interpolateShip(previous, current, alpha) {
+export function interpolateDrone(previous, current, alpha) {
   return {
     x: lerp(previous.x, current.x, alpha),
     y: lerp(previous.y, current.y, alpha),
@@ -64,31 +64,49 @@ export function drawStarfield(ctx, stars) {
   }
 }
 
-export function drawShip(ctx, ship) {
+export function drawDrone(ctx, drone) {
   ctx.save()
-  ctx.translate(ship.x, ship.y)
-  ctx.rotate(ship.angle)
+  ctx.translate(drone.x, drone.y)
+  ctx.rotate(drone.angle)
 
-  if (ship.thrust > 0) {
+  if (drone.thrust > 0) {
     ctx.fillStyle = '#fb923c'
     ctx.beginPath()
-    ctx.moveTo(-10, 0)
-    ctx.lineTo(-20, -5)
-    ctx.lineTo(-14, 0)
-    ctx.lineTo(-20, 5)
+    ctx.moveTo(-12, 0)
+    ctx.lineTo(-20, -4)
+    ctx.lineTo(-16, 0)
+    ctx.lineTo(-20, 4)
     ctx.closePath()
     ctx.fill()
   }
 
   ctx.fillStyle = '#e5e7eb'
+  ctx.lineWidth = 2
   ctx.beginPath()
-  ctx.moveTo(16, 0)
-  ctx.lineTo(-12, -10)
-  ctx.lineTo(-6, 0)
-  ctx.lineTo(-12, 10)
-  ctx.closePath()
+  ctx.moveTo(-10, -10)
+  ctx.lineTo(10, 10)
+  ctx.moveTo(-10, 10)
+  ctx.lineTo(10, -10)
+ ctx.stroke();
+
+
+  // мотори по кутах
+ ctx.fillStyle = '#e5e7eb'
+ const arms = [[10, 10], [10, -10], [-10, 10], [-10, -10]]
+ for(const [x, y] of arms){
+  ctx.beginPath()
+  ctx.arc(x, y, 3, 0, Math.PI * 2)
   ctx.fill()
-  ctx.restore()
+ }
+
+ // ноc (напрямок), щоб було видно orientation
+ ctx.beginPath()
+ ctx.moveTo(14, 0)
+ ctx.lineTo(6, -4)
+ ctx.lineTo(6, 4)
+ ctx.closePath()
+ ctx.fill()
+ ctx.restore()
 }
 
 export function drawHud(ctx, stats) {
